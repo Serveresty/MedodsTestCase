@@ -1,18 +1,14 @@
 package service
 
 import (
+	dbservice "MedodsTestCase/service/db_service"
 	jwtservice "MedodsTestCase/service/jwt_service"
 	"net/http"
 
-	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/crypto/bcrypt"
 )
 
-type Router struct {
-	*mongo.Database
-}
-
-func (db *Router) GetKeys(w http.ResponseWriter, r *http.Request) {
+func (db *DBCollection) GetKeys(w http.ResponseWriter, r *http.Request) {
 	guid := r.URL.Query().Get("guid")
 
 	signedKey := jwtservice.GenerateSeed()
@@ -33,6 +29,27 @@ func (db *Router) GetKeys(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
+	}
+	rTokenHashStr := string(rTokenHash)
+
+	isNewUser, user, err := dbservice.FindUser(guid, rTokenHashStr, db.Collection)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if isNewUser {
+		err := dbservice.InsertNewUser(guid, rTokenHashStr, db.Collection)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	} else {
+		err := dbservice.UpdateUser(user, rTokenHashStr, db.Collection)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
 
 	http.SetCookie(w, &http.Cookie{
