@@ -7,6 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Записать нового пользователя в коллекцию
 func InsertNewUser(guid string, tokenHash string, coll *mongo.Collection) error {
 	newRefresh := make([]string, 0, 1)
 	newRefresh = append(newRefresh, tokenHash)

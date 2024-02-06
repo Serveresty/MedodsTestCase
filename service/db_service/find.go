@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Найти пользователя в коллекции
 func FindUser(guid string, coll *mongo.Collection) (bool, *models.User, error) {
 	findFilter := bson.M{"guid": guid}
 

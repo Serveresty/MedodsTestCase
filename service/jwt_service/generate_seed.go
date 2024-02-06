@@ -2,6 +2,7 @@ package jwtservice
 
 import "math/rand"
 
+// Генерация сида, который связывает Access и Refresh токены
 func GenerateSeed() string {
 	var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
 

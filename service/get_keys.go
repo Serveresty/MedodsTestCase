@@ -8,6 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Получение токенов
 func (db *DBCollection) GetKeys(w http.ResponseWriter, r *http.Request) {
 	guid := r.URL.Query().Get("guid")
 

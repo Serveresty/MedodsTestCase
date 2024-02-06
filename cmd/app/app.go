@@ -12,6 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// Инициализация пути к параметрам
 func init() {
 	if err := godotenv.Load("../../env/.env"); err != nil {
 		log.Print("No .env file found")
@@ -25,9 +26,11 @@ func main() {
 }
 
 func run(ctx context.Context) error {
+	// Получение хоста и порта к mongodb
 	host := env.GetEnv("HOST")
 	port := env.GetEnv("PORT")
 
+	// Коннект к mongodb
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://"+host+":"+port))
 	if err != nil {
 		return err
@@ -38,10 +41,11 @@ func run(ctx context.Context) error {
 		}
 	}()
 
+	// Создать бд + коллекцию
 	collection := client.Database("Medods").Collection("users")
 
+	// Создать хендлер запросов и передать коллекции
 	router := http.NewServeMux()
-
 	service.Routs(router, collection)
 
 	err = http.ListenAndServe(":8080", router)

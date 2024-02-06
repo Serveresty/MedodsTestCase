@@ -8,6 +8,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+// Генерация токена
 func GenerateToken(guid string, signedKey string) (string, time.Time, error) {
 	exTime := time.Now().Add(2 * time.Hour)
 

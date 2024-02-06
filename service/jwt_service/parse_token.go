@@ -9,6 +9,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
+// Получение информации из токена
 func ParseToken(token string) (*models.Claims, error) {
 	secretKey := []byte(env.GetEnv("SECRET_KEY"))
 

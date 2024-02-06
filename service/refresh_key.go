@@ -8,6 +8,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// "Refresh операция для Access токена"
 func (db *DBCollection) RefreshKey(w http.ResponseWriter, r *http.Request) {
 	cookie, err := r.Cookie("refresh-token")
 	if err != nil {

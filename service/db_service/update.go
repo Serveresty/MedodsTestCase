@@ -9,6 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// Обновить данные пользователя (задать новый refresh токен)
 func UpdateUser(user *models.User, tokenHash string, coll *mongo.Collection) error {
 	user.RefreshTokens = append(user.RefreshTokens, tokenHash)
 
