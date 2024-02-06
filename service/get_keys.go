@@ -32,7 +32,7 @@ func (db *DBCollection) GetKeys(w http.ResponseWriter, r *http.Request) {
 	}
 	rTokenHashStr := string(rTokenHash)
 
-	isNewUser, user, err := dbservice.FindUser(guid, rTokenHashStr, db.Collection)
+	isNewUser, user, err := dbservice.FindUser(guid, db.Collection)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

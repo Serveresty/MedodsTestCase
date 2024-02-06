@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func FindUser(guid string, tokenHash string, coll *mongo.Collection) (bool, *models.User, error) {
+func FindUser(guid string, coll *mongo.Collection) (bool, *models.User, error) {
 	findFilter := bson.M{"guid": guid}
 
 	var user models.User
